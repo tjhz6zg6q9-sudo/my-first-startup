@@ -7,18 +7,19 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# --- 2. 處理表單提交 ---
 @app.route('/submit', methods=['POST'])
 def submit():
+    # 1. 從表單抓取資料 (確保名稱與 HTML 裡的 name 一致)
     name = request.form.get('user_name')
     email = request.form.get('user_email')
+    message = request.form.get('user_message')  # <-- 這是新增的！
     
-    # 儲存資料到檔案
+    # 2. 儲存資料到檔案 (把意見也寫進去)
     with open("contacts.txt", "a", encoding="utf-8") as file:
-        file.write(f"姓名: {name}, 信箱: {email}\n")
+        file.write(f"姓名: {name}, 信箱: {email}, 意見: {message}\n")
 
     print(f"成功存檔：{name}")
-    return f"感謝您，{name}！您的資料已成功存入我們的系統。"
+    return f"感謝您，{name}！您的資料與意見已成功存入我們的系統。"
 
 # --- 3. 秘密後門 (這段原本在下面，現在要搬到這裡！) ---
 @app.route('/secret-view')
