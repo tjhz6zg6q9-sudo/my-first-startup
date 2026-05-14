@@ -7,6 +7,15 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# --- 1. 首頁 ---
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route('/submit', methods=['POST'])
 def submit():
     # 1. 從表單抓取資料 (確保名稱與 HTML 裡的 name 一致)
